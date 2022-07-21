@@ -85,4 +85,29 @@ class DockTest < Minitest::Test
     assert_equal expectation_1, dock.charge(sup_1)
   end
 
+  def test_boats_can_be_returned_with_revenue_earned
+    dock = Dock.new("The Rowing Dock", 3)
+    kayak_1 = Boat.new(:kayak, 20)
+    kayak_2 = Boat.new(:kayak, 20)
+    canoe = Boat.new(:canoe, 25)
+    sup_1 = Boat.new(:standup_paddle_board, 15)
+    sup_2 = Boat.new(:standup_paddle_board, 15)
+    patrick = Renter.new("Patrick Star", "4242424242424242")
+    eugene = Renter.new("Eugene Crabs", "1313131313131313")
+
+    dock.rent(kayak_1, patrick) # Rent Boats out to first Renter
+    dock.rent(kayak_2, patrick)
+    dock.log_hour # kayak_1 and kayak_2 are rented an additional hour
+    dock.rent(canoe, patrick)
+    dock.log_hour # kayak_1, kayak_2, and canoe are rented an additional hour
+
+    assert_equal 0, dock.revenue # Revenue should not be generated until boats are returned
+
+    dock.return(kayak_1)
+    dock.return(kayak_2)
+    dock.return(canoe)
+
+    assert_equal 105, dock.revenue 
+  end
+
 end

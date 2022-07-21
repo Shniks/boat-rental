@@ -1,4 +1,3 @@
-require './lib/boat'
 require 'pry'
 
 class Dock
