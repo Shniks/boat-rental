@@ -49,7 +49,7 @@ class Dock
 
   def revenue
     rental_log.keys.reduce(0) do |sum, boat|
-      return 0 if self.return_flag[boat] == 0
+      return 0 if self.return_flag[boat] != 1
       sum + charge(boat)[:amount]
     end
   end
