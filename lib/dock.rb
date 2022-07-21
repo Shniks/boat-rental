@@ -42,4 +42,8 @@ class Dock
     find_boat(boat).first.hours_rented
   end
 
+  def log_hour
+    rental_log.each { |boat, renter| boat.add_hour }
+  end
+
 end
