@@ -19,16 +19,16 @@ class Dock
     { :card_number => credit_card(boat), :amount => amount(boat) }
   end
 
-  def find_boat(boat)
-    rental_log.find { |type, name| type == boat }
-  end
-
   def credit_card(boat)
     find_boat(boat).last.credit_card_number
   end
 
-  def hours(boat)
-    find_boat(boat).first.hours_rented
+  def find_boat(boat)
+    rental_log.find { |type, name| type == boat }
+  end
+
+  def amount(boat)
+    pph(boat) * adjusted_hours(boat)
   end
 
   def pph(boat)
@@ -39,8 +39,8 @@ class Dock
     [hours(boat), max_rental_time].min
   end
 
-  def amount(boat)
-    pph(boat) * adjusted_hours(boat)
+  def hours(boat)
+    find_boat(boat).first.hours_rented
   end
 
 end
