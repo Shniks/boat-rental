@@ -100,14 +100,25 @@ class DockTest < Minitest::Test
     dock.log_hour # kayak_1 and kayak_2 are rented an additional hour
     dock.rent(canoe, patrick)
     dock.log_hour # kayak_1, kayak_2, and canoe are rented an additional hour
+    expectation_1 = ({
+      :card_number => "4242424242424242",
+      :amount => 40
+      })
 
+    expectation_2 = ({
+      :card_number => "4242424242424242",
+      :amount => 25
+      })
+
+    assert_equal expectation_1, dock.charge(kayak_1)
+    assert_equal expectation_2, dock.charge(canoe)
     assert_equal 0, dock.revenue # Revenue should not be generated until boats are returned
 
     dock.return(kayak_1)
     dock.return(kayak_2)
     dock.return(canoe)
 
-    assert_equal 105, dock.revenue 
+    assert_equal 105, dock.revenue
   end
 
 end

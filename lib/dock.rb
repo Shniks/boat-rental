@@ -46,4 +46,8 @@ class Dock
     rental_log.each { |boat, renter| boat.add_hour }
   end
 
+  def revenue
+
+  end 
+
 end
