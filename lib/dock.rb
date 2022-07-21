@@ -2,12 +2,13 @@ require 'pry'
 
 class Dock
 
-  attr_reader :name, :max_rental_time, :rental_log
+  attr_reader :name, :max_rental_time, :rental_log, :return_flag
 
   def initialize(name, max_rental_time)
     @name = name
     @max_rental_time = max_rental_time
     @rental_log = {}
+    @return_flag = Hash.new(0)
   end
 
   def rent(boat, renter)
@@ -47,7 +48,14 @@ class Dock
   end
 
   def revenue
+    rental_log.keys.reduce(0) do |sum, boat|
+      return 0 if self.return_flag[boat] == 0
+      sum + charge(boat)[:amount]
+    end
+  end
 
-  end 
+  def return(boat)
+    return_flag[boat] = 1
+  end
 
 end
