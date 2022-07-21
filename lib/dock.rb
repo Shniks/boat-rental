@@ -1,12 +1,13 @@
 class Dock
 
-  attr_reader :name, :max_rental_time, :rental_log, :return_flag
+  attr_reader :name, :max_rental_time, :rental_log, :return_flag, :total_revenue
 
   def initialize(name, max_rental_time)
     @name = name
     @max_rental_time = max_rental_time
     @rental_log = {}
     @return_flag = Hash.new(0)
+    @total_revenue = 0
   end
 
   def rent(boat, renter)
@@ -48,9 +49,13 @@ class Dock
   end
 
   def revenue
-    rental_log.keys.reduce(0) do |sum, boat|
-      return 0 if self.return_flag[boat] != 1
-      sum + charge(boat)[:amount]
+    rental_log.keys.each { |boat| flag_conditional(boat) }
+    total_revenue
+  end
+
+  def flag_conditional(boat)
+    if return_flag[boat] == 1
+      @total_revenue += charge(boat)[:amount]
     end
   end
 
