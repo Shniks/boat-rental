@@ -123,7 +123,7 @@ class DockTest < Minitest::Test
     assert_equal 105, dock.revenue
   end
 
-  def test_boats_can_be_returned_with_revenue_earned
+  def test_boats_can_be_returned_with_revenue_earned_for_second_renter
     dock = Dock.new("The Rowing Dock", 3)
     kayak_1 = Boat.new(:kayak, 20)
     kayak_2 = Boat.new(:kayak, 20)

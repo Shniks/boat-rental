@@ -1,5 +1,3 @@
-require 'pry'
-
 class Dock
 
   attr_reader :name, :max_rental_time, :rental_log, :return_flag
@@ -44,7 +42,9 @@ class Dock
   end
 
   def log_hour
-    rental_log.each { |boat, renter| boat.add_hour }
+    rental_log.each do |boat, renter|
+      boat.add_hour if return_flag[boat] == 0
+    end
   end
 
   def revenue
